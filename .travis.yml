@@ -4,4 +4,7 @@ go:
   - 1.4
   - tip
 
+services:
+  - redis-server
+
 script: go test ./...
