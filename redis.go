@@ -53,7 +53,12 @@ func (r *RedisDriver) OpenConnection(connection interface{}, settings ...string)
 		return nil, fmt.Errorf("Connection %s is unknown.", connection)
 	}
 
-	s, err := NewRedisSettingsFromQuery(settings[0])
+	sett := ""
+	if len(settings) > 0 {
+		sett = settings[0]
+	}
+
+	s, err := NewRedisSettingsFromQuery(sett)
 	if err != nil {
 		return nil, err
 	}

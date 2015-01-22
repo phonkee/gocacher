@@ -27,6 +27,8 @@ func TestRedisSettings(t *testing.T) {
 		_, errOpen = driver.OpenConnection(pool, "%")
 		So(errOpen, ShouldNotBeNil)
 
+		_, errOpen = driver.OpenConnection(pool)
+		So(errOpen, ShouldBeNil)
 	})
 
 	Convey("Test parse query settings", t, func() {
