@@ -9,20 +9,20 @@ import (
 )
 
 /*
-CacheDriver interface
+CacheDriverer interface
  	All cache drivers must satisfy this interface.
 */
-type CacheDriver interface {
-	Open(dsn string) (Cache, error)
+type CacheDriverer interface {
+	Open(dsn string) (Cacher, error)
 
-	OpenConnection(connection interface{}, settings ...string) (Cache, error)
+	OpenConnection(connection interface{}, settings ...string) (Cacher, error)
 }
 
 /*
 Cache interface
  	All cache implementations must satisfy this interface.
 */
-type Cache interface {
+type Cacher interface {
 	// returns cache value by key
 	Get(key string) ([]byte, error)
 
@@ -43,14 +43,14 @@ type Cache interface {
 }
 
 // registered cache drivers
-var drivers = make(map[string]CacheDriver)
+var drivers = make(map[string]CacheDriverer)
 
 /*
 Register makes a cache driver available by the provided name.
 If Register is called twice with the same name or if driver is nil,
 it panics.
 */
-func Register(name string, driver CacheDriver) {
+func Register(name string, driver CacheDriverer) {
 	if driver == nil {
 		panic("gocacher: Register driver is nil")
 	}
@@ -82,7 +82,7 @@ Which translates to connection to localhost:5379 redis pool max_active=10
 and expiration for cache.Set default value will be set to 10 seconds
 
 */
-func Open(dsn string) (Cache, error) {
+func Open(dsn string) (Cacher, error) {
 	d, err := godsn.Parse(dsn)
 	if err != nil {
 		return nil, err
@@ -96,7 +96,7 @@ func Open(dsn string) (Cache, error) {
 }
 
 // opens message queue by name and connection
-func OpenConnection(driver string, connection interface{}, settings ...string) (Cache, error) {
+func OpenConnection(driver string, connection interface{}, settings ...string) (Cacher, error) {
 	di, ok := drivers[driver]
 	if !ok {
 		return nil, fmt.Errorf("gocacher: unknown driver %q (forgotten import?)", driver)

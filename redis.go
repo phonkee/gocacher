@@ -30,7 +30,7 @@ func init() {
 
 type RedisDriver struct{}
 
-func (r *RedisDriver) Open(dsn string) (Cache, error) {
+func (r *RedisDriver) Open(dsn string) (Cacher, error) {
 	d, err := ParseRedisDSN(dsn)
 	if err != nil {
 		return nil, err
@@ -44,7 +44,7 @@ func (r *RedisDriver) Open(dsn string) (Cache, error) {
 	return &cache, nil
 }
 
-func (r *RedisDriver) OpenConnection(connection interface{}, settings ...string) (Cache, error) {
+func (r *RedisDriver) OpenConnection(connection interface{}, settings ...string) (Cacher, error) {
 
 	switch connection.(type) {
 	case *redis.Pool:
