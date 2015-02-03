@@ -11,7 +11,7 @@ be more implementations (memcached, and other..).
 
 All cache implementations satisfy this interface
 ```go
-type Cache interface {
+type Cacher interface {
 	// returns cache value by key
 	Get(key string) ([]byte, error)
 
