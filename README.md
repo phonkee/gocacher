@@ -3,6 +3,7 @@
 [![Build Status](https://travis-ci.org/phonkee/gocacher.svg?branch=master)](https://travis-ci.org/phonkee/gocacher)
 [![Coverage Status](https://coveralls.io/repos/phonkee/gocacher/badge.svg)](https://coveralls.io/r/phonkee/gocacher)
 
+
 Gocacher is cache abstraction. It's intended to use in web applications with
 possibility to choose cache implementation directly from configuration (dsn).
 
