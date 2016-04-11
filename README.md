@@ -92,5 +92,42 @@ cache, _ := gocacher.OpenConnection("redis", pool)
 cache, _ := gocacher.OpenConnection("redis", pool, "expiration=60&prefix=cache")
 ```
 
+#### Parameters
+You can pass multiple parameters to `Open` or `OpenConnection` as query part of dsn.
+
+e.g.
+```go
+cache, _ := gocacher.Open("locmem:///0?expiration=10s")
+cache, _ := gocacher.Open("redis://localhost:5379/1?expiration=60&prefix=cache")
+```
+
+### Cache implementations
+
+Currently two imlpementations are available:
+* redis - redis storage
+* locmem - local memory storage
+
+
+#### Locmem
+Local memory cache. Supports multiple databases. Currently there is no garbage collect or limiting of items in database.
+This will be updated in near future.
+
+```go
+cache, _ := gocacher.Open("locmem:///0")
+```
+
+##### parameters:
+* expiration - string parsed with time parse duration. (default expiration is 0s - neverending)
+
+#### Redis
+Redis cache support. Supports multiple databases and all commands.
+
+##### parameters:
+* pool_max_active - redis pool settings
+* pool_max_idle - redis pool settings
+* pool_idle_timeout - redis pool settings
+* expiration - default expiration
+* prefix - prefix for cache keys
+
 ## Contribute
 Welcome!

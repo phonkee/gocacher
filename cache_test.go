@@ -45,6 +45,7 @@ func TestCacheCommands(t *testing.T) {
 
 	dsns := []string{
 		"redis://localhost:6379/4",
+		"locmem:///database?gc=true",
 	}
 
 	Convey("Test cache set/get.", t, func() {
